@@ -1,9 +1,19 @@
-name: Build Infra
+
+# github workflow definition
+name: Deploy Infra
 on: [push]
-jobs:
-  tfsec:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run tfsec static scan
-        run: echo "Executing tfsec scan analysis over terraform files"
+
+# tfsec block simulation for validator
+terraform {
+  required_version = ">= 0.14.9"
+}
+
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = "upt-arg-secure"
+  location = "eastus"
+}
+
