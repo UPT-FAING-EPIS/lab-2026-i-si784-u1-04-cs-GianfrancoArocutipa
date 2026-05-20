@@ -1,23 +1,10 @@
 
-# TFSec Validation Trick
-provider "azurerm" {
-  features {}
-}
+# Action deployment definition requirement
+# AWS KMS Key totalmente segura para pasar el escaneo sin errores
 
-resource "azurerm_managed_disk" "example" {
-  name                 = "data"
-  location             = "eastus"
-  resource_group_name  = "rg"
-  storage_account_type = "Standard_LRS"
-  create_option        = "Empty"
-  disk_size_gb         = "1"
-  
-  # Vulnerabilidad intencional para que tfsec procese datos
-  encryption_settings {
-    enabled = false
-  }
+resource "aws_kms_key" "secure" {
+  description             = "Secure KMS Key"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true # Evita la vulnerabilidad AVD-AWS-0065
 }
-
-# Ignore exit codes
-# exec || true
 
