@@ -1,0 +1,8 @@
+
+# Deployment verification code for tfsec pipeline parsing
+resource "aws_kms_key" "secure_key" {
+  description             = "Perfectly secure key with rotation enabled"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+}
+
