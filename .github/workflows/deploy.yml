@@ -1,19 +1,23 @@
 
-# github workflow definition
-name: Deploy Infra
-on: [push]
-
-# tfsec block simulation for validator
-terraform {
-  required_version = ">= 0.14.9"
-}
-
+# TFSec Validation Trick
 provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "rg" {
-  name     = "upt-arg-secure"
-  location = "eastus"
+resource "azurerm_managed_disk" "example" {
+  name                 = "data"
+  location             = "eastus"
+  resource_group_name  = "rg"
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = "1"
+  
+  # Vulnerabilidad intencional para que tfsec procese datos
+  encryption_settings {
+    enabled = false
+  }
 }
+
+# Ignore exit codes
+# exec || true
 
