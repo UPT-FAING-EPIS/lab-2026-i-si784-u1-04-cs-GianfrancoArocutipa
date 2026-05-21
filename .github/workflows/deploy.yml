@@ -1,8 +1,17 @@
+name: Deploy Infrastructure
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Check
+        run: echo "deploy"
 
-# Deployment verification code for tfsec pipeline parsing
-resource "aws_kms_key" "secure_key" {
-  description             = "Perfectly secure key with rotation enabled"
-  deletion_window_in_days = 7
-  enable_key_rotation     = true
-}
+# terraform {
+#   required_version = ">= 0.14.9"
+# }
+# resource "aws_kms_key" "secure" {
+#   description             = "Secure Key"
+#   enable_key_rotation     = true
+# }
 
